@@ -98,7 +98,17 @@ namespace factorySpace ///Implmementation of the factory namespace
   }
 
   ///Display the game on the console
-  void displayWorld(const struGameWorld& recworld);
+  void displayWorld(const struGameWorld& recworld)
+  {
+      for(int a=0;a<recworld.row;a++)
+      {
+          for(int b=0;b<recworld.col;b++)
+          {
+              cout<<CH_FEATURES[recworld.arrWorld[a][b]];
+          }
+          cout<<endl;
+      }
+  }
 
   ///Ensuring that the player moves withnin  the world
   bool isInWorld(struGameWorld& recworld);
