@@ -1,0 +1,6 @@
+#ifndef FACTORYSPACE_H_INCLUDED
+#define FACTORYSPACE_H_INCLUDED
+#include <iostream>
+
+
+#endif // FACTORYSPACE_H_INCLUDED
