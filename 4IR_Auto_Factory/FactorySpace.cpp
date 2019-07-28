@@ -107,7 +107,16 @@ namespace factorySpace ///Implmementation of the factory namespace
   void movePlayer(struGameWorld& recworld);
 
   ///freeing allocated memory
-  void deAllocateMemory(struGameWorld& recworld);
+  void deAllocateMemory(struGameWorld& recworld)
+  {
+      assert(recworld.arrWorld != nullptr);
+      for(int a=0;a<recworld.row;a++)
+      {
+          delete[] recworld.arrWorld[a];
+      }
+      delete[] recworld.arrWorld;
+      recworld.arrWorld=nullptr;
+  }
 
 
 
