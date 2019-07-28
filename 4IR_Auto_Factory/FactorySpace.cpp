@@ -9,8 +9,27 @@ namespace factorySpace ///Implmementation of the factory namespace
         if(argc!=4)
         {
             cerr<<"Incorrect number of arguments for"<<argv[0]<<endl;
-            exit(enumReturn_Codes::INVALID_ARGC)
+            exit(enumReturn_Codes::INVALID_ARGC);
         }
     }
+
+   ///Implementation of function that convert strings to number
+   int convertToInt(string strNumber)
+   {
+       stringstream convStr;
+       convStr<<strNumber;
+       int intNumber=0;
+       convStr>>intNumber;
+       if(convStr.fail())
+       {
+           cerr<<"Unable to convert to int"<<endl;
+           exit(enumReturn_Codes::ERROR_CONV);
+       }
+       return intNumber;
+   }
+
+
+
+
 
 }

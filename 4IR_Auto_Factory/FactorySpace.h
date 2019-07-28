@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <sstream>
 
 using namespace std;
 namespace factorySpace ///Creation of a namespace
@@ -16,6 +17,7 @@ namespace factorySpace ///Creation of a namespace
     {
         SUCCESS,
         INVALID_INPUT,
+        ERROR_CONV,
         INVALID_ARGC,
         EXIT
     };
@@ -50,7 +52,7 @@ namespace factorySpace ///Creation of a namespace
 
   ///function of the game
   void validateArgs(int argc,char** argv);
-  void convertToInt(string strNumber);
+  int convertToInt(string strNumber);
   int genRandom(int intMin,int intMax);
   struGameWorld makeWorld(int intRow,int intCol,int intParts);
   void displayWorld(const struGameWorld& recworld);
