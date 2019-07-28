@@ -28,6 +28,34 @@ namespace factorySpace ///Implmementation of the factory namespace
        return intNumber;
    }
 
+   ///Generate random numbers
+   int genRandom(int intMin,int intMax)
+   {
+       assert(intMin < intMax);
+       int intRange=intMax - intMin + 1;
+       return rand()%intRange + intMin;
+   }
+
+   ///Initialised the game and store values inside the variables
+  struGameWorld makeWorld(int intRow,int intCol,int intParts);
+
+  ///Display the game on the console
+  void displayWorld(const struGameWorld& recworld);
+
+  ///Ensuring that the player moves withnin  the world
+  bool isInWorld(struGameWorld& recworld);
+
+  ///Moving the player
+  void movePlayer(struGameWorld& recworld);
+
+  ///freeing allocated memory
+  void deAllocateMemory(struGameWorld& recworld);
+
+
+
+
+
+
 
 
 

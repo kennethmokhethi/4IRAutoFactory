@@ -4,6 +4,8 @@
 #include <string>
 #include <cstdlib>
 #include <sstream>
+#include <ctime>
+#include <cassert>
 
 using namespace std;
 namespace factorySpace ///Creation of a namespace
