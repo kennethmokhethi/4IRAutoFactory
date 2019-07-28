@@ -29,7 +29,7 @@ namespace factorySpace ///Creation of a namespace
     {
         PLAYER,
         SPACE,
-        FACRORY,
+        FACTORY,
         PARTS
     };
 
@@ -49,6 +49,7 @@ namespace factorySpace ///Creation of a namespace
         struLocation Player;
         int row=-1;
         int col=-1;
+        int parts=-1;
         t_2DArray arrWorld;
     };
 
