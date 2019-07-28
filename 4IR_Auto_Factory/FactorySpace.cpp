@@ -111,7 +111,15 @@ namespace factorySpace ///Implmementation of the factory namespace
   }
 
   ///Ensuring that the player moves withnin  the world
-  bool isInWorld(struGameWorld& recworld);
+  bool isInWorld(struGameWorld& recworld)
+  {
+      if(recworld.Player.row<0) return false;
+      if(recworld.Player.row>recworld.row) return false;
+      if(recworld.Player.col<0) return false;
+      if(recworld.Player.col>recworld.col) return false;
+      if(recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::FACTORY) return false;
+      if(recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::PARTS) return false;
+  }
 
   ///Moving the player
   void movePlayer(struGameWorld& recworld);
