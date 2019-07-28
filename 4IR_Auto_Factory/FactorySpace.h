@@ -16,7 +16,7 @@ namespace factorySpace ///Creation of a namespace
     {
         SUCCESS,
         INVALID_INPUT,
-        INVALID_ARGS,
+        INVALID_ARGC,
         EXIT
     };
 
