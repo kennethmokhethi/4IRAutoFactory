@@ -10,9 +10,10 @@
 using namespace std;
 namespace factorySpace ///Creation of a namespace
 {
-    ///Type definations of the pointer
+    ///Type definations of the pointerS
     typedef int* t_1DArray;
     typedef int** t_2DArray;
+
 
     ///Enumerations for return codes
     enum enumReturn_Codes
@@ -21,6 +22,8 @@ namespace factorySpace ///Creation of a namespace
         INVALID_INPUT,
         ERROR_CONV,
         INVALID_ARGC,
+        WON,
+        LOST,
         EXIT
     };
 
@@ -50,6 +53,8 @@ namespace factorySpace ///Creation of a namespace
         int row=-1;
         int col=-1;
         int parts=-1;
+        int g_score=10;
+        int g_part=0;
         t_2DArray arrWorld;
     };
 
@@ -58,9 +63,10 @@ namespace factorySpace ///Creation of a namespace
   int convertToInt(string strNumber);
   int genRandom(int intMin,int intMax);
   struGameWorld makeWorld(int intRow,int intCol,int intParts);
-  void displayWorld(const struGameWorld& recworld);
+  void displayWorld(struGameWorld& recworld);
   bool isInWorld(struGameWorld& recworld);
-  void movePlayer(struGameWorld& recworld);
+  void movePlayer(struGameWorld& recworld,char chInput);
+  void outcome(struGameWorld& recworld);
   void deAllocateMemory(struGameWorld& recworld);
 
 

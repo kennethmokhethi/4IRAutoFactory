@@ -97,9 +97,25 @@ namespace factorySpace ///Implmementation of the factory namespace
       return recworld;
   }
 
-  ///Display the game on the console
-  void displayWorld(const struGameWorld& recworld)
+  ///Display moving and general instructions of the game
+  void displayInstr(struGameWorld& recworld)
   {
+      cout<<endl;
+      cout<<"**Instructions of the game**"<<endl;
+      cout<<"Moves left <<"<<recworld.g_score<<">>"<<endl;
+      cout<<"Parts carried <<"<<recworld.g_part<<">>"<<endl;
+      cout<<"Press W to move UP"<<endl;
+      cout<<"Press S to move DOWN"<<endl;
+      cout<<"Press A to move LEFT"<<endl;
+      cout<<"Press D to move RIGHT"<<endl;
+      cout<<"Press X to exit the game"<<endl;
+  }
+
+  ///Display the game on the console
+  void displayWorld(struGameWorld& recworld)
+  {
+      system("cls");
+
       for(int a=0;a<recworld.row;a++)
       {
           for(int b=0;b<recworld.col;b++)
@@ -108,21 +124,93 @@ namespace factorySpace ///Implmementation of the factory namespace
           }
           cout<<endl;
       }
+      displayInstr(recworld);
   }
 
   ///Ensuring that the player moves withnin  the world
   bool isInWorld(struGameWorld& recworld)
   {
       if(recworld.Player.row<0) return false;
-      if(recworld.Player.row>recworld.row) return false;
+      if(recworld.Player.row>recworld.row-1) return false;
       if(recworld.Player.col<0) return false;
-      if(recworld.Player.col>recworld.col) return false;
+      if(recworld.Player.col>recworld.col-1) return false;
       if(recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::FACTORY) return false;
-      if(recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::PARTS) return false;
+      if((recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::PARTS)&& recworld.g_part==1) return false;
+
+      return true;
   }
 
   ///Moving the player
-  void movePlayer(struGameWorld& recworld);
+  void movePlayer(struGameWorld& recworld,char chInput)
+  {
+      int intDRow=recworld.Player.row;
+      int intDCol=recworld.Player.col;
+      switch(chInput)
+      {
+          case 'a':
+          case 'A':
+            {
+               recworld.Player.col--;
+               break;
+            }
+          case 'd':
+          case 'D':
+            {
+                recworld.Player.col++;
+                break;
+            }
+          case 'w':
+          case 'W':
+            {
+                recworld.Player.row--;
+                break;
+            }
+          case 's':
+          case 'S':
+            {
+                recworld.Player.row++;
+                break;
+            }
+          case 'x':
+          case 'X':
+            {
+                cout<<"You have exited the game"<<endl;
+                exit(enumReturn_Codes::EXIT);
+            }
+          default:
+            {
+                cerr<<"Inalid option <<"<<chInput<<">>"<<endl;
+                exit(enumReturn_Codes::INVALID_INPUT);
+            }
+      }
+
+       outcome(recworld);
+      if(isInWorld(recworld))
+      {
+          recworld.arrWorld[recworld.Player.row][recworld.Player.col]=enumFeatures::PLAYER;
+          recworld.arrWorld[intDRow][intDCol]=enumFeatures::SPACE;
+          recworld.g_score--;
+      }else{
+          recworld.Player.row=intDRow;
+          recworld.Player.col=intDCol;
+      }
+
+
+
+
+
+  }
+
+  ///Stating whether the player has won or lost
+  void outcome(struGameWorld& recworld)
+  {
+
+      if((recworld.arrWorld[recworld.Player.row][recworld.Player.col]==enumFeatures::PARTS) &&(recworld.g_part!=1))
+      {
+          recworld.arrWorld[recworld.Player.row][recworld.Player.col]=enumFeatures::SPACE;
+          recworld.g_part++;
+      }
+  }
 
   ///freeing allocated memory
   void deAllocateMemory(struGameWorld& recworld)
