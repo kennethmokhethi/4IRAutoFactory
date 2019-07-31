@@ -4,10 +4,10 @@ using namespace std;
 using namespace factorySpace;
 int main(int argc,char** argv)
 {
-    ///Ensuring the number of arguments are 4
+    ///Ensuring the number of arguments are 4.
     validateArgs(argc,argv);
 
-    ///Initialise the diminsions of the game and the number of parts
+    ///Initialise the diminsions of the game and the number of parts.
     int intTRow=convertToInt(argv[1]);
     int intTCol=convertToInt(argv[2]);
     int intTParts=convertToInt(argv[3]);
@@ -23,6 +23,7 @@ int main(int argc,char** argv)
        cin>>chInput;
        movePlayer(recworld,chInput);
 
+       ///Changing the flag.
        if((recworld.g_score<0) || (recworld.parts<0))
        {
            blnContinue=false;
@@ -32,7 +33,7 @@ int main(int argc,char** argv)
     }while(blnContinue);
 
 
-    ///Stating the player won or lost
+    ///Stating the player won or lost.
      if(blnWon)
      {
          if(recworld.parts<0)

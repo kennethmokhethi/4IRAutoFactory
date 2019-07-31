@@ -1,9 +1,9 @@
 #include "FactorySpace.h"
 
 using namespace std;
-namespace factorySpace ///Implmementation of the factory namespace
+namespace factorySpace ///Implmementation of the factory namespace.
 {
-    ///Validating to ensure that the command line arguments provided are 4
+    ///Validating to ensure that the command line arguments provided are 4.
     void validateArgs(int argc,char** argv)
     {
         if(argc!=4)
@@ -13,7 +13,7 @@ namespace factorySpace ///Implmementation of the factory namespace
         }
     }
 
-   ///Implementation of function that convert strings to number
+   ///Implementation of function that convert strings to number.
    int convertToInt(string strNumber)
    {
        stringstream convStr;
@@ -28,7 +28,7 @@ namespace factorySpace ///Implmementation of the factory namespace
        return intNumber;
    }
 
-   ///Generate random numbers
+   ///Generate random numbers.
    int genRandom(int intMin,int intMax)
    {
        assert(intMin < intMax);
@@ -36,17 +36,17 @@ namespace factorySpace ///Implmementation of the factory namespace
        return rand()%intRange + intMin;
    }
 
-  ///Place features of the game:Player,factory and parts
+  ///Place features of the game:Player,factory and parts.
   void placeFeatures(struGameWorld& recworld)
   {
       assert(recworld.arrWorld!=nullptr);
 
-      ///Place the player
+      ///Place the player.
       recworld.Player.row=genRandom(0, recworld.row/2);
       recworld.Player.col=genRandom(0,recworld.col/2);
       recworld.arrWorld[recworld.Player.row][recworld.Player.col]=enumFeatures::PLAYER;
 
-      ///Place the factory
+      ///Place the factory.
       int intFRow=genRandom(0,recworld.row-1);
       int intFCol=genRandom(0,recworld.col-1);
       while(recworld.arrWorld[intFRow][intFCol]==enumFeatures::PLAYER)
@@ -54,9 +54,13 @@ namespace factorySpace ///Implmementation of the factory namespace
          intFRow=genRandom(0,recworld.row-1);
          intFCol=genRandom(0,recworld.col-1);
       }
+
+      ///Storing the cordinates of the factory.
+      recworld.Factory.row=intFRow;
+      recworld.Factory.col=intFCol;
       recworld.arrWorld[intFRow][intFCol]=enumFeatures::FACTORY;
 
-      ///Place the parts
+      ///Place the parts.
       int intCount=0;
       while(intCount<=recworld.parts)
       {
@@ -73,9 +77,7 @@ namespace factorySpace ///Implmementation of the factory namespace
 
   }
 
-
-
-   ///Initialised the game and store values inside the variables
+   ///Initialised the game and store values inside the variables.
   struGameWorld makeWorld(int intRow,int intCol,int intParts)
   {
 
@@ -97,7 +99,7 @@ namespace factorySpace ///Implmementation of the factory namespace
       return recworld;
   }
 
-  ///Display moving and general instructions of the game
+  ///Display moving and general instructions of the game.
   void displayInstr(struGameWorld& recworld)
   {
       cout<<endl;
@@ -111,7 +113,7 @@ namespace factorySpace ///Implmementation of the factory namespace
       cout<<"Press X to exit the game"<<endl;
   }
 
-  ///Display the game on the console
+  ///Display the game on the console.
   void displayWorld(struGameWorld& recworld)
   {
       system("cls");
@@ -127,7 +129,7 @@ namespace factorySpace ///Implmementation of the factory namespace
       displayInstr(recworld);
   }
 
-  ///Ensuring that the player moves withnin  the world
+  ///Ensuring that the player moves within the world.
   bool isInWorld(struGameWorld& recworld)
   {
       if(recworld.Player.row<0) return false;
@@ -140,7 +142,35 @@ namespace factorySpace ///Implmementation of the factory namespace
       return true;
   }
 
-  ///Moving the player
+  ///Placing the parts into the factory.
+ void placeParts(struGameWorld& recworld)
+  {
+      int intPMinRow=recworld.Factory.row -1;
+      int intPMaxRow=recworld.Factory.row +1;
+      int intPMinCol=recworld.Factory.col -1;
+      int intPMaxCol=recworld.Factory.col +1;
+
+      if((recworld.arrWorld[intPMaxRow][intPMinCol]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[intPMaxRow][intPMaxCol]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[intPMinRow][intPMinCol]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[intPMinRow][intPMaxCol]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[intPMaxRow][recworld.Factory.col]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[recworld.Factory.row][intPMinCol]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[intPMinRow][recworld.Factory.col]==enumFeatures::PLAYER) ||
+         (recworld.arrWorld[recworld.Factory.row][intPMaxCol]==enumFeatures::PLAYER))
+      {
+          ///Updating the parts carried and increasing the score.
+          if(recworld.g_part==1)
+          {
+            recworld.g_part--;
+            recworld.g_score+=10;
+            recworld.arrWorld[recworld.Player.row][recworld.Player.col]=enumFeatures::PLAYER;
+          }
+
+      }
+  }
+
+  ///Moving the player.
   void movePlayer(struGameWorld& recworld,char chInput)
   {
       int intDRow=recworld.Player.row;
@@ -171,6 +201,12 @@ namespace factorySpace ///Implmementation of the factory namespace
                 recworld.Player.row++;
                 break;
             }
+          case 'p':
+          case 'P':
+            {
+                placeParts(recworld);
+                break;
+            }
           case 'x':
           case 'X':
             {
@@ -196,12 +232,9 @@ namespace factorySpace ///Implmementation of the factory namespace
       }
 
 
-
-
-
   }
 
-  ///Stating whether the player has won or lost
+  ///Stating whether the player has won or lost.
   void outcome(struGameWorld& recworld)
   {
 
@@ -212,7 +245,7 @@ namespace factorySpace ///Implmementation of the factory namespace
       }
   }
 
-  ///freeing allocated memory
+  ///freeing allocated memory.
   void deAllocateMemory(struGameWorld& recworld)
   {
       assert(recworld.arrWorld != nullptr);
@@ -223,14 +256,5 @@ namespace factorySpace ///Implmementation of the factory namespace
       delete[] recworld.arrWorld;
       recworld.arrWorld=nullptr;
   }
-
-
-
-
-
-
-
-
-
 
 }
